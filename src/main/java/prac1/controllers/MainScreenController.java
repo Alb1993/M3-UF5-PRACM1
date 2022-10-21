@@ -25,6 +25,13 @@ public class MainScreenController implements Initializable {
     Media m;
     
     MediaPlayer mp;
+    
+    @FXML
+    void on_botTestClic(ActionEvent event) {
+        
+        mp.play();     
+
+    }
   
     /***
      * Inicialitza el controlador
@@ -35,14 +42,10 @@ public class MainScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        String fitxerDemo = FileUtils.getTestMP3(this).toString();
+       String fitxerDemo = FileUtils.getTestMP3(this).toString();
         
-        if (openMedia(fitxerDemo))
-        {
-            mp.play();     
-        }
-        else
-            mp = null;
+       openMedia(fitxerDemo);
+        
     }
     
     /***
