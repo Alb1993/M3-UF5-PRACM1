@@ -4,7 +4,7 @@
  */
 package prac1.utils;
 
-import java.io.File;
+import java.nio.file.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -15,16 +15,36 @@ import javafx.stage.Stage;
 public class FileUtils {
     
     /***
-     * Retorna un MP3 de prova
-     * 
-     * @param instance
+     * Si la URL és basura de tipus Windows, elimina el nom de la unitat
      * @return 
      */
-    public static File getTestMP3(Object instance)
+    public static String normalizeURLFormat(String url)
     {
-        File ret = new File(instance.getClass().getClassLoader().getResource("sounds/test_sound.mp3").toExternalForm());
+        String ret = "";
+        
+        if (IdentificaOS.getOS() == IdentificaOS.TipusOS.WIN)
+            ret = url.replace("[A-Z]{1}:", "");
         
         return ret;
+    }
+    
+    /***
+     * Retorna la ruta al MP3 de prova
+     * La ruta es torna en format URL. 
+     * 
+     * P.ex: 
+     * 
+     *  Si s'executa sobre Windows, ho retorna en el format: file:/C:/Users/abcd1234/Documents/NetBeansProjects/m03uf5prac1_22_23_enunciat/target/classes/sounds/test_sound.mp3
+     *  Si s'executa sobre Linux, ho retorna en el format: file:/home/manel/NetBeansProjects/m03uf5prac1_22_23_enunciat/target/classes/sounds/test_sound.mp3
+     * 
+     *  https://en.wikipedia.org/wiki/File_URI_scheme
+     * 
+     * @param instance instància des de la qual es crida (this)
+     * @return 
+     */
+    public static String getTestMP3(Object instance)
+    {
+        return instance.getClass().getClassLoader().getResource("sounds/test_sound.mp3").toString();
     }
     
     /***
@@ -34,11 +54,9 @@ public class FileUtils {
      * @param nom
      * @return 
      */
-    public static File getIcona(Object instance, String nom)
+    public static String getIcona(Object instance, String nom)
     {
-        File ret = new File(instance.getClass().getClassLoader().getResource("icons/" + nom).toExternalForm());
-        
-        return ret;
+        return instance.getClass().getClassLoader().getResource("icons/" + nom).toString();
     }
     
     /***
@@ -46,16 +64,16 @@ public class FileUtils {
      * 
      * @return 
      */
-    public static File getMP3Fromfile()
+    public static Path getMP3Fromfile()
     {
-        File ret = null;
+        Path ret = null;
         
         Stage stage1 = new Stage();
         
         FileChooser filechooser1 = new FileChooser();
         
         filechooser1.setTitle("Seleccionar fixter MP3");
-        File fitxerMP3 = filechooser1.showOpenDialog(stage1);
+        Path fitxerMP3 = filechooser1.showOpenDialog(stage1).toPath();
         
         if (fitxerMP3 != null)
             ret = fitxerMP3;

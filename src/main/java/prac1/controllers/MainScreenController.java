@@ -4,14 +4,15 @@
  */
 package prac1.controllers;
 
-import java.io.File;
+import java.net.URI;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import prac1.utils.FileUtils;
 
@@ -22,14 +23,15 @@ import prac1.utils.FileUtils;
  */
 public class MainScreenController implements Initializable {
     
-    Media m;
+    Media media = null;
     
-    MediaPlayer mp;
+    MediaPlayer player = null;
     
     @FXML
     void on_botTestClic(ActionEvent event) {
         
-        mp.play();     
+        if (this.player != null)
+            player.play();     
 
     }
   
@@ -42,34 +44,32 @@ public class MainScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-       String fitxerDemo = FileUtils.getTestMP3(this).toString();
+       String path  = FileUtils.getTestMP3(this);
         
-       openMedia(fitxerDemo);
+       openMedia(path);
         
     }
     
     /***
      * Inicialitza el reproductor amb un fitxer MP3
      * 
+     * El format ha de ser de tipus URL
+     * 
+     * 
      */
-    private boolean openMedia(String path)
+    private void openMedia(String path)
     {
-        
-        boolean ret = false;
-        
         try{
             
-            this.m = new Media(path);
+            // actuaslitzem el recurs MP3
+            this.media = new Media(path);
 
-            this.mp = new MediaPlayer(m);
-
-            ret = true;
+            // inicialitzem el reproductor
+            this.player = new MediaPlayer(media);
             
-        } catch (Exception e) {
+        } catch (MediaException e) {
             
-            
-        } 
-        
-        return ret;
+            System.out.println("ERROR obrint fitxer demo: " + path + ":" + e.toString());
+        }
     }
 }
