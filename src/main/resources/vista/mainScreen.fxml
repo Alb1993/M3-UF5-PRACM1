@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="main_container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prac1.controllers.MainScreenController">
+<AnchorPane fx:id="main_container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prac1.controllers.MainScreenController">
    <children>
-      <Button fx:id="btn_play" layoutX="210.0" layoutY="331.0" mnemonicParsing="false" onAction="#on_botTestClic" prefHeight="50.0" prefWidth="50.0" text="PLAY" AnchorPane.bottomAnchor="20.0" />
+      <Button fx:id="btn_play" layoutX="175.0" layoutY="330.0" mnemonicParsing="false" onAction="#on_botTestClic" prefHeight="50.0" prefWidth="66.0" text="PLAY" AnchorPane.bottomAnchor="20.0" />
       <ListView fx:id="list_music" layoutX="164.0" layoutY="30.0" prefHeight="260.0" prefWidth="200.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0" />
-      <Button fx:id="btn_stop" layoutX="269.0" layoutY="340.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="STOP" AnchorPane.bottomAnchor="20.0" />
-      <Button fx:id="btn_forward" layoutX="334.0" layoutY="318.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="&gt;&gt;" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="40.0" />
-      <Button fx:id="btn_pause" layoutX="160.0" layoutY="340.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="PAUSE" AnchorPane.bottomAnchor="20.0" />
-      <Button fx:id="btn_back" layoutX="109.0" layoutY="340.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="&lt;&lt;" AnchorPane.bottomAnchor="20.0" />
-      <Button fx:id="btn_add" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" text="Añadir..." AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="40.0" />
-      <Button layoutX="14.0" layoutY="65.0" mnemonicParsing="false" text="Eliminar" AnchorPane.leftAnchor="40.0" />
+      <Button fx:id="btn_stop" layoutX="250.0" layoutY="340.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="79.0" text="STOP" AnchorPane.bottomAnchor="20.0" />
+      <Button fx:id="btn_forward" layoutX="339.0" layoutY="330.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="55.0" text="&gt;&gt;" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="6.0" />
+      <Button fx:id="btn_pause" layoutX="89.0" layoutY="330.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="79.0" text="PAUSE" AnchorPane.bottomAnchor="20.0" />
+      <Button fx:id="btn_back" layoutX="14.0" layoutY="330.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="66.0" text="&lt;&lt;" AnchorPane.bottomAnchor="20.0" />
+      <Button fx:id="btn_add" layoutX="42.0" layoutY="21.0" mnemonicParsing="false" onAction="#on_botAddClic" text="Añadir..." AnchorPane.leftAnchor="42.0" AnchorPane.topAnchor="21.0" />
+      <Button fx:id="btn_delete" layoutX="14.0" layoutY="65.0" mnemonicParsing="false" onAction="#on_botDeleteClic" text="Eliminar" AnchorPane.leftAnchor="40.0" />
       <Slider fx:id="slider_audio" layoutX="63.0" layoutY="100.0" orientation="VERTICAL" prefHeight="199.0" prefWidth="14.0" AnchorPane.leftAnchor="65.0" />
    </children>
 </AnchorPane>
