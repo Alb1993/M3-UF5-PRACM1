@@ -4,7 +4,13 @@
  */
 package prac1.utils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.*;
+import java.util.Properties;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -13,72 +19,68 @@ import javafx.stage.Stage;
  * @author manel
  */
 public class FileUtils {
-    
-    /***
+
+    /**
+     * *
      * Si la URL és basura de tipus Windows, elimina el nom de la unitat
-     * @return 
+     *
+     * @return
      */
-    public static String normalizeURLFormat(String url)
-    {
+    public static String normalizeURLFormat(String url) {
         String ret = "";
-        
-        if (IdentificaOS.getOS() == IdentificaOS.TipusOS.WIN)
+
+        if (IdentificaOS.getOS() == IdentificaOS.TipusOS.WIN) {
             ret = url.replace("[A-Z]{1}:", "");
-        
+        }
+
         return ret;
     }
-    
-    /***
-     * Retorna la ruta al MP3 de prova
-     * La ruta es torna en format URL. 
-     * 
-     * P.ex: 
-     * 
-     *  Si s'executa sobre Windows, ho retorna en el format: file:/C:/Users/abcd1234/Documents/NetBeansProjects/m03uf5prac1_22_23_enunciat/target/classes/sounds/test_sound.mp3
-     *  Si s'executa sobre Linux, ho retorna en el format: file:/home/manel/NetBeansProjects/m03uf5prac1_22_23_enunciat/target/classes/sounds/test_sound.mp3
-     * 
-     *  https://en.wikipedia.org/wiki/File_URI_scheme
-     * 
+
+    /**
+     * *
+     * Retorna la ruta al MP3 de prova La ruta es torna en format URL.
+     *
+     * P.ex:
+     *
+     * Si s'executa sobre Windows, ho retorna en el format:
+     * file:/C:/Users/abcd1234/Documents/NetBeansProjects/m03uf5prac1_22_23_enunciat/target/classes/sounds/test_sound.mp3
+     * Si s'executa sobre Linux, ho retorna en el format:
+     * file:/home/manel/NetBeansProjects/m03uf5prac1_22_23_enunciat/target/classes/sounds/test_sound.mp3
+     *
+     * https://en.wikipedia.org/wiki/File_URI_scheme
+     *
      * @param instance instància des de la qual es crida (this)
-     * @return 
+     * @return
      */
-    public static String getTestMP3(Object instance)
-    {
+    public static String getTestMP3(Object instance) {
         return instance.getClass().getClassLoader().getResource("sounds/test_sound.mp3").toString();
     }
-    
-    /***
+
+    /**
+     * *
      * Retorna una icona
-     * 
+     *
      * @param instance
      * @param nom
-     * @return 
+     * @return
      */
-    public static String getIcona(Object instance, String nom)
-    {
+    public static String getIcona(Object instance, String nom) {
         return instance.getClass().getClassLoader().getResource("icons/" + nom).toString();
     }
-    
-    /***
+
+    /**
+     * *
      * Permet seleccionar un fitxer MP3 d'una unitat de disc
-     * 
-     * @return 
+     *
+     * @return
      */
-    public static Path getMP3Fromfile()
-    {
-        Path ret = null;
-        
+    public static File getMP3Fromfile() throws FileNotFoundException, IOException {
         Stage stage1 = new Stage();
-        
         FileChooser filechooser1 = new FileChooser();
-        
         filechooser1.setTitle("Seleccionar fixter MP3");
-        Path fitxerMP3 = filechooser1.showOpenDialog(stage1).toPath();
-        
-        if (fitxerMP3 != null)
-            ret = fitxerMP3;
-        
-        return ret;
+        //Path fitxerMP3 = filechooser1.showOpenDialog(stage1).toPath();
+        File ficheroMP3 = filechooser1.showOpenDialog(stage1);
+        return ficheroMP3;
     }
-    
+
 }
