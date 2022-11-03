@@ -7,22 +7,21 @@ import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-
-public class Cancion {
+public class Cancion{
 
     private String nombre;
-    private Path ruta;
-    private AudioFileFormat duracion;
+    private String duracion;
+    private String ruta;
 
     public String getNombre() {
         return nombre;
     }
 
-    public Path getRuta() {
+    public String getRuta() {
         return ruta;
     }
 
-    public AudioFileFormat getDuracion() {
+    public String getDuracion() {
         return duracion;
     }
 
@@ -30,20 +29,18 @@ public class Cancion {
         this.nombre = nombre;
     }
 
-    public void setRuta(Path ruta) {
+    public void setRuta(String ruta) {
         this.ruta = ruta;
     }
 
-    public void setDuracion(File file) throws UnsupportedAudioFileException, IOException {
-        this.duracion = AudioSystem.getAudioFileFormat(file);
+    public void setDuracion(String duracion) {
+        this.duracion = duracion;
     }
 
-    public Cancion(String nombre, Path ruta, AudioFileFormat duracion) {
+    public Cancion(String nombre, String ruta, String duracion) {
         this.nombre = nombre;
         this.ruta = ruta;
         this.duracion = duracion;
     }
 
-
-    
 }
