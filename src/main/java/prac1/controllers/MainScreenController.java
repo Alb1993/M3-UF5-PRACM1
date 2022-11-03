@@ -95,7 +95,7 @@ public class MainScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         String path = FileUtils.getTestMP3(this);
-
+        
         openMedia(path);
 
     }
