@@ -25,7 +25,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javax.sound.sampled.AudioFileFormat;
-import prac1.utils.Cancion;
 import prac1.utils.FileUtils;
 
 /**
@@ -38,13 +37,13 @@ public class MainScreenController implements Initializable {
     Media media = null;
 
     MediaPlayer player = null;
-
+    
     @FXML
     ListView list_music;
 
-    ObservableList<String> lista;
+    private ObservableList<String> lista = FXCollections.observableArrayList();
 
-    ArrayList<Cancion> playlist;
+    ArrayList<Cancion> playlist = new ArrayList<Cancion>();
 
     @FXML
     void on_botTestClic(ActionEvent event) {
@@ -56,26 +55,28 @@ public class MainScreenController implements Initializable {
     }
 
     @FXML
-    void on_botAddClic(ActionEvent event) throws FileNotFoundException, IOException {
-        
-        InputStream entrada = null;
-        Properties propiedades = new Properties();
+    void on_botAddClic(ActionEvent event) {
+        try {
+            String path;
+            File archivo = FileUtils.getMP3Fromfile();
+            path = archivo.toURI().toString();
+            if (path != null) {
+                media = new Media(path);
+                player = new MediaPlayer(media);
+                String duracion = media.durationProperty().toString();
+                String titulo = archivo.getName();
+                String ruta = archivo.getAbsolutePath();
+                Cancion cancion = new Cancion(titulo,duracion,ruta);
+                playlist.add(cancion);
+                lista.add(titulo);
+                list_music.setItems(lista);
+            }
 
-        Path ruta = FileUtils.getMP3Fromfile();
-
-        entrada = new FileInputStream(ruta.toFile());
-        propiedades.load(entrada);
-        String duracion = propiedades.getProperty("duration");
-        String titulo = propiedades.getProperty("title");
-
-        Cancion cancion = null;
-        cancion.setNombre(titulo);
-        cancion.setDuracion(duracion);
-        cancion.setRuta(ruta);
-        playlist.add(cancion);
-        lista.add(titulo);
-        list_music.refresh();
-
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
