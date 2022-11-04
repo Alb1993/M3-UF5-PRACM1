@@ -45,6 +45,7 @@ public class MainScreenController implements Initializable {
      @FXML
     private Button btn_play;
      
+   
     private ObservableList<String> lista = FXCollections.observableArrayList();
 
     ArrayList<Cancion> playlist = new ArrayList<Cancion>();
@@ -58,7 +59,13 @@ public class MainScreenController implements Initializable {
         }
 
     }
-
+    
+    @FXML
+    void on_botPauseClic(ActionEvent event) {
+        player.pause();
+    }
+   
+    
     @FXML
     void on_botAddClic(ActionEvent event) {
         try {
@@ -101,6 +108,7 @@ public class MainScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        
         String path = FileUtils.getTestMP3(this);
 
         openMedia(path);
