@@ -68,8 +68,17 @@ public class MainScreenController implements Initializable {
             player.play();
             btn_play.setDisable(true);
             btn_pause.setDisable(false);
+            btn_stop.setDisable(false);
         }
 
+    }
+    
+     @FXML
+    void on_botStopClic(ActionEvent event) {
+        player.stop();
+        btn_pause.setDisable(true);
+        btn_stop.setDisable(true);
+        btn_play.setDisable(false);
     }
 
     @FXML
