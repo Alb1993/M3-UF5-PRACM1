@@ -15,6 +15,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +24,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
@@ -41,16 +44,19 @@ public class MainScreenController implements Initializable {
 
     @FXML
     ListView list_music;
-    
-     @FXML
+
+    @FXML
     private Button btn_play;
-     
-     @FXML
+
+    @FXML
     private Button btn_pause;
-     
-     @FXML
+
+    @FXML
     private Button btn_stop;
-   
+    
+    @FXML
+    private Slider volumeSlider;
+
     private ObservableList<String> lista = FXCollections.observableArrayList();
 
     ArrayList<Cancion> playlist = new ArrayList<Cancion>();
@@ -65,24 +71,24 @@ public class MainScreenController implements Initializable {
         }
 
     }
-    
+
     @FXML
     void on_botPauseClic(ActionEvent event) {
         player.pause();
         btn_play.setDisable(false);
         btn_pause.setDisable(true);
     }
-   
-     @FXML
+
+    @FXML
     void on_botBackward(ActionEvent event) {
 
     }
-    
-     @FXML
+
+    @FXML
     void on_botForward(ActionEvent event) {
 
     }
-    
+
     @FXML
     void on_botAddClic(ActionEvent event) {
         try {
@@ -125,11 +131,13 @@ public class MainScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        
         String path = FileUtils.getTestMP3(this);
 
         openMedia(path);
-
+        volumeSlider.setValue(player.getVolume() * 100);
+        volumeSlider.valueProperty().addListener((Observable observable) -> {
+            player.setVolume(volumeSlider.getValue() / 100);
+        });
     }
 
     /**
@@ -154,14 +162,14 @@ public class MainScreenController implements Initializable {
             System.out.println("ERROR obrint fitxer demo: " + path + ":" + e.toString());
         }
     }
-    
-    private String removerExtension(String titulo){
+
+    private String removerExtension(String titulo) {
         int lastIndex = titulo.lastIndexOf('.');
         if (lastIndex != -1) {
             titulo = titulo.substring(0, lastIndex);
         }
-        return titulo;  
-    
+        return titulo;
+
     }
-   
+
 }
