@@ -37,7 +37,7 @@ public class MainScreenController implements Initializable {
     Media media = null;
 
     MediaPlayer player = null;
-    
+
     @FXML
     ListView list_music;
 
@@ -59,19 +59,20 @@ public class MainScreenController implements Initializable {
         try {
             String path;
             File archivo = FileUtils.getMP3Fromfile();
-            path = archivo.toURI().toString();
-            if (path != null) {
-                media = new Media(path);
-                player = new MediaPlayer(media);
-                String duracion = media.durationProperty().toString();
-                String titulo = archivo.getName();
-                String ruta = archivo.getAbsolutePath();
-                Cancion cancion = new Cancion(titulo,duracion,ruta);
-                playlist.add(cancion);
-                lista.add(titulo);
-                list_music.setItems(lista);
+            if (archivo != null) {
+                path = archivo.toURI().toString();
+                if (path != null) {
+                    media = new Media(path);
+                    player = new MediaPlayer(media);
+                    String duracion = media.durationProperty().toString();
+                    String titulo = archivo.getName();
+                    String ruta = archivo.getAbsolutePath();
+                    Cancion cancion = new Cancion(titulo, duracion, ruta);
+                    playlist.add(cancion);
+                    lista.add(titulo);
+                    list_music.setItems(lista);
+                }
             }
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -95,7 +96,7 @@ public class MainScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         String path = FileUtils.getTestMP3(this);
-        
+
         openMedia(path);
 
     }
