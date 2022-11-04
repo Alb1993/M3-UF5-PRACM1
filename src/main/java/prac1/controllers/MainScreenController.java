@@ -20,6 +20,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
@@ -40,16 +41,20 @@ public class MainScreenController implements Initializable {
 
     @FXML
     ListView list_music;
-
+    
+     @FXML
+    private Button btn_play;
+     
     private ObservableList<String> lista = FXCollections.observableArrayList();
 
     ArrayList<Cancion> playlist = new ArrayList<Cancion>();
 
     @FXML
-    void on_botTestClic(ActionEvent event) {
+    void on_botPlayClic(ActionEvent event) {
 
         if (this.player != null) {
             player.play();
+            btn_play.setDisable(true);
         }
 
     }
