@@ -65,6 +65,20 @@ public class MainScreenController implements Initializable {
         player.pause();
     }
    
+     @FXML
+    void onStopClic(ActionEvent event) {
+
+    }
+
+     @FXML
+    void on_botBackward(ActionEvent event) {
+
+    }
+    
+     @FXML
+    void on_botForward(ActionEvent event) {
+
+    }
     
     @FXML
     void on_botAddClic(ActionEvent event) {
