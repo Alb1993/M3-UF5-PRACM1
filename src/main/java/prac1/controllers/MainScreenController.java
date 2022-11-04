@@ -67,6 +67,7 @@ public class MainScreenController implements Initializable {
                     String duracion = media.durationProperty().toString();
                     String titulo = archivo.getName();
                     String ruta = archivo.getAbsolutePath();
+                    titulo = removerExtension(titulo);
                     Cancion cancion = new Cancion(titulo, duracion, ruta);
                     playlist.add(cancion);
                     lista.add(titulo);
@@ -123,4 +124,14 @@ public class MainScreenController implements Initializable {
             System.out.println("ERROR obrint fitxer demo: " + path + ":" + e.toString());
         }
     }
+    
+    private String removerExtension(String titulo){
+        int lastIndex = titulo.lastIndexOf('.');
+        if (lastIndex != -1) {
+            titulo = titulo.substring(0, lastIndex);
+        }
+        return titulo;  
+    
+    }
+   
 }
