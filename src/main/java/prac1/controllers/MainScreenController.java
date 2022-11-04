@@ -28,6 +28,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 import javax.sound.sampled.AudioFileFormat;
 import prac1.utils.FileUtils;
 
@@ -95,7 +96,19 @@ public class MainScreenController implements Initializable {
 
     @FXML
     void on_botForward(ActionEvent event) {
-
+        Duration currentTime = player.getCurrentTime();
+        double time = currentTime.toSeconds();
+        double newTime = (time + 15.00) * 1000;
+        if (newTime > player.getTotalDuration().toMillis()) {
+            player.stop();
+            btn_play.setDisable(false);
+            btn_pause.setDisable(true);
+            btn_stop.setDisable(true);
+        } else {
+            Duration finalTime = new Duration(newTime);
+            player.seek(finalTime);
+            
+        }
     }
 
     @FXML
