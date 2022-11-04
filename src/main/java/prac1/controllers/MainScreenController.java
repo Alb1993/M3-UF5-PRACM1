@@ -54,10 +54,16 @@ public class MainScreenController implements Initializable {
 
     @FXML
     private Button btn_stop;
-    
+
     @FXML
     private Slider volumeSlider;
+    
+    @FXML
+    private Button btn_back;
 
+    @FXML
+    private Button btn_forward;
+    
     private ObservableList<String> lista = FXCollections.observableArrayList();
 
     ArrayList<Cancion> playlist = new ArrayList<Cancion>();
@@ -70,11 +76,13 @@ public class MainScreenController implements Initializable {
             btn_play.setDisable(true);
             btn_pause.setDisable(false);
             btn_stop.setDisable(false);
+            btn_back.setDisable(false);
+            btn_forward.setDisable(false);
         }
 
     }
-    
-     @FXML
+
+    @FXML
     void on_botStopClic(ActionEvent event) {
         player.stop();
         btn_pause.setDisable(true);
@@ -91,6 +99,16 @@ public class MainScreenController implements Initializable {
 
     @FXML
     void on_botBackward(ActionEvent event) {
+        Duration currentTime = player.getCurrentTime();
+        double time = currentTime.toSeconds();
+        double newTime = (time - 15.00) * 1000;
+        if (newTime < player.getStartTime().toMillis()) {
+            player.seek(player.getStartTime());
+        } else {
+            Duration finalTime = new Duration(newTime);
+            player.seek(finalTime);
+
+        }
 
     }
 
@@ -104,10 +122,12 @@ public class MainScreenController implements Initializable {
             btn_play.setDisable(false);
             btn_pause.setDisable(true);
             btn_stop.setDisable(true);
+            btn_back.setDisable(true);
+            btn_forward.setDisable(true);
         } else {
             Duration finalTime = new Duration(newTime);
             player.seek(finalTime);
-            
+
         }
     }
 
