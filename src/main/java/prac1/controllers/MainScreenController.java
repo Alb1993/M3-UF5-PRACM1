@@ -45,6 +45,11 @@ public class MainScreenController implements Initializable {
      @FXML
     private Button btn_play;
      
+     @FXML
+    private Button btn_pause;
+     
+     @FXML
+    private Button btn_stop;
    
     private ObservableList<String> lista = FXCollections.observableArrayList();
 
@@ -56,6 +61,7 @@ public class MainScreenController implements Initializable {
         if (this.player != null) {
             player.play();
             btn_play.setDisable(true);
+            btn_pause.setDisable(false);
         }
 
     }
@@ -63,13 +69,10 @@ public class MainScreenController implements Initializable {
     @FXML
     void on_botPauseClic(ActionEvent event) {
         player.pause();
+        btn_play.setDisable(false);
+        btn_pause.setDisable(true);
     }
    
-     @FXML
-    void onStopClic(ActionEvent event) {
-
-    }
-
      @FXML
     void on_botBackward(ActionEvent event) {
 
