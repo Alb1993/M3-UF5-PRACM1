@@ -26,6 +26,7 @@ public class FileUtils {
      *
      * @return
      */
+    
     public static String normalizeURLFormat(String url) {
         String ret = "";
 
@@ -52,9 +53,9 @@ public class FileUtils {
      * @param instance instància des de la qual es crida (this)
      * @return
      */
-    public static String getTestMP3(Object instance) {
+    /*public static String getTestMP3(Object instance) {
         return instance.getClass().getClassLoader().getResource("sounds/test_sound.mp3").toString();
-    }
+    }*/
 
     /**
      * *
@@ -78,7 +79,6 @@ public class FileUtils {
         Stage stage1 = new Stage();
         FileChooser filechooser1 = new FileChooser();
         filechooser1.setTitle("Seleccionar fixter MP3");
-        //Path fitxerMP3 = filechooser1.showOpenDialog(stage1).toPath();
         File ficheroMP3 = filechooser1.showOpenDialog(stage1);
         return ficheroMP3;
     }
