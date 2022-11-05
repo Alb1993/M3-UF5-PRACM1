@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 /**
@@ -29,6 +28,8 @@ public class App extends Application {
             scene = new Scene(p);
             
             primaryStage.setScene(scene);
+            
+            primaryStage.sizeToScene();
             
             primaryStage.show();
             
