@@ -5,32 +5,29 @@
 package prac1.controllers;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URL;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Properties;
-import java.util.ResourceBundle;
-import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
+import javafx.util.Duration;
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
-import javafx.util.Duration;
-import javax.sound.sampled.AudioFileFormat;
 import prac1.utils.FileUtils;
+
+
+
+
 
 /**
  * FXML Controller class
@@ -141,7 +138,7 @@ public class MainScreenController implements Initializable {
                 if (path != null) {
                     media = new Media(path);
                     player = new MediaPlayer(media);
-                    String duracion = media.durationProperty().toString();
+                    String duracion = media.getDuration().toString();
                     String titulo = archivo.getName();
                     String ruta = archivo.getAbsolutePath();
                     titulo = removerExtension(titulo);
@@ -160,7 +157,8 @@ public class MainScreenController implements Initializable {
 
     @FXML
     void on_botDeleteClic(ActionEvent event) {
-
+        String title = list_music.getSelectionModel().getSelectedItem().toString();
+        borraCancion(title,playlist);
     }
 
     /**
@@ -172,8 +170,10 @@ public class MainScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        String path = FileUtils.getTestMP3(this);
+        
+        String title = list_music.getSelectionModel().getSelectedItem().toString();
+        Cancion cancion1 = buscaCancion(title,playlist);
+        String path = cancion1.getRuta();
 
         openMedia(path);
         volumeSlider.setValue(player.getVolume() * 100);
@@ -181,7 +181,30 @@ public class MainScreenController implements Initializable {
             player.setVolume(volumeSlider.getValue() / 100);
         });
     }
+    
+    public Cancion buscaCancion(String title,ArrayList<Cancion> playlist){
+        Cancion ret = null;
+        for(int i=0; i<playlist.size(); i++){
+            Cancion c = playlist.get(i);
+            if(c.getNombre().equals(title)){
+                ret = playlist.get(i);
+                
+            }
+        }
+            
+        return ret;
+    }
 
+    public void borraCancion(String title,ArrayList<Cancion> playlist){
+        for(int i=0; i<playlist.size(); i++){
+            Cancion c = playlist.get(i);
+            if(c.getNombre().equals(title)){
+                playlist.remove(i);
+                lista.remove(i);
+                list_music.refresh();
+            }
+        }
+    }
     /**
      * *
      * Inicialitza el reproductor amb un fitxer MP3
