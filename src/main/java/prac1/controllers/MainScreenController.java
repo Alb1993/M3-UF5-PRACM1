@@ -25,10 +25,6 @@ import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import prac1.utils.FileUtils;
 
-
-
-
-
 /**
  * FXML Controller class
  *
@@ -54,13 +50,13 @@ public class MainScreenController implements Initializable {
 
     @FXML
     private Slider volumeSlider;
-    
+
     @FXML
     private Button btn_back;
 
     @FXML
     private Button btn_forward;
-    
+
     private ObservableList<String> lista = FXCollections.observableArrayList();
 
     ArrayList<Cancion> playlist = new ArrayList<Cancion>();
@@ -156,9 +152,17 @@ public class MainScreenController implements Initializable {
     }
 
     @FXML
+    void onClickSong(ActionEvent event) {
+        String selectedSong = list_music.getSelectionModel().getSelectedItem().toString();
+
+        buscaCancion(selectedSong, playlist);
+        
+    }
+
+    @FXML
     void on_botDeleteClic(ActionEvent event) {
         String title = list_music.getSelectionModel().getSelectedItem().toString();
-        borraCancion(title,playlist);
+        borraCancion(title, playlist);
     }
 
     /**
@@ -170,9 +174,9 @@ public class MainScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         String title = list_music.getSelectionModel().getSelectedItem().toString();
-        Cancion cancion1 = buscaCancion(title,playlist);
+        Cancion cancion1 = buscaCancion(title, playlist);
         String path = cancion1.getRuta();
 
         openMedia(path);
@@ -181,30 +185,31 @@ public class MainScreenController implements Initializable {
             player.setVolume(volumeSlider.getValue() / 100);
         });
     }
-    
-    public Cancion buscaCancion(String title,ArrayList<Cancion> playlist){
+
+    public Cancion buscaCancion(String title, ArrayList<Cancion> playlist) {
         Cancion ret = null;
-        for(int i=0; i<playlist.size(); i++){
+        for (int i = 0; i < playlist.size(); i++) {
             Cancion c = playlist.get(i);
-            if(c.getNombre().equals(title)){
+            if (c.getNombre().equals(title)) {
                 ret = playlist.get(i);
-                
+
             }
         }
-            
+
         return ret;
     }
 
-    public void borraCancion(String title,ArrayList<Cancion> playlist){
-        for(int i=0; i<playlist.size(); i++){
+    public void borraCancion(String title, ArrayList<Cancion> playlist) {
+        for (int i = 0; i < playlist.size(); i++) {
             Cancion c = playlist.get(i);
-            if(c.getNombre().equals(title)){
+            if (c.getNombre().equals(title)) {
                 playlist.remove(i);
                 lista.remove(i);
                 list_music.refresh();
             }
         }
     }
+
     /**
      * *
      * Inicialitza el reproductor amb un fitxer MP3
