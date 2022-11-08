@@ -1,22 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package prac1.utils;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.*;
-import java.util.Properties;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
  *
- * @author manel
+ * @author FpShare
  */
 public class FileUtils {
 
@@ -24,6 +16,7 @@ public class FileUtils {
      * *
      * Si la URL és basura de tipus Windows, elimina el nom de la unitat
      *
+     * @param url
      * @return
      */
     
@@ -74,6 +67,7 @@ public class FileUtils {
      * Permet seleccionar un fitxer MP3 d'una unitat de disc
      *
      * @return
+     * @throws java.io.FileNotFoundException
      */
     public static File getMP3Fromfile() throws FileNotFoundException, IOException {
         Stage stage1 = new Stage();

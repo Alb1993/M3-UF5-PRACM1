@@ -8,7 +8,7 @@
 <AnchorPane fx:id="main_container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prac1.controllers.MainScreenController">
    <children>
       <Button fx:id="btn_play" layoutX="175.0" layoutY="330.0" mnemonicParsing="false" onAction="#on_botPlayClic" prefHeight="50.0" prefWidth="66.0" text="PLAY" AnchorPane.bottomAnchor="20.0" />
-      <ListView fx:id="list_music" layoutX="164.0" layoutY="30.0" onContextMenuRequested="#onClickSong" prefHeight="260.0" prefWidth="200.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0" />
+      <ListView fx:id="list_music" layoutX="164.0" layoutY="30.0" onMouseClicked="#onClickSong" prefHeight="260.0" prefWidth="200.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0" />
       <Button fx:id="btn_stop" layoutX="250.0" layoutY="340.0" mnemonicParsing="false" onAction="#on_botStopClic" prefHeight="50.0" prefWidth="79.0" text="STOP" AnchorPane.bottomAnchor="20.0" />
       <Button fx:id="btn_forward" layoutX="339.0" layoutY="330.0" mnemonicParsing="false" onAction="#on_botForward" prefHeight="50.0" prefWidth="55.0" text="&gt;&gt;" AnchorPane.bottomAnchor="20.0" />
       <Button fx:id="btn_pause" layoutX="89.0" layoutY="330.0" mnemonicParsing="false" onAction="#on_botPauseClic" prefHeight="50.0" prefWidth="79.0" text="PAUSE" AnchorPane.bottomAnchor="20.0" />

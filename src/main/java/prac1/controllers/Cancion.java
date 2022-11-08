@@ -1,12 +1,5 @@
 package prac1.controllers;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import javax.sound.sampled.AudioFileFormat;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
 public class Cancion{
 
     private String nombre;

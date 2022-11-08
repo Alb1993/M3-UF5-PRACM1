@@ -170,7 +170,12 @@ public class MainScreenController implements Initializable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * 
+     * @param event
+     * Este metodo lo que hace es comparar la canción seleccionada por el usuario
+     * con las guardadas en la lista.
+     */
     @FXML
     String onClickSong(ActionEvent event) {
         String selectedSong = list_music.getSelectionModel().getSelectedItem().toString();
@@ -197,11 +202,18 @@ public class MainScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        // aqui instanciamos el slider para que funcione lo de regular el volumen
         volumeSlider.valueProperty().addListener((Observable observable) -> {
             player.setVolume(volumeSlider.getValue() / 100);
         });
     }
-
+    /**
+     * 
+     * @param title
+     * @param playlist
+     * Este metodo devuelve la cancion de la lista que se asemeja a la enviada
+     * en el string title
+     */
     public Cancion buscaCancion(String title, ArrayList<Cancion> playlist) {
         Cancion ret = null;
         for (int i = 0; i < playlist.size(); i++) {
