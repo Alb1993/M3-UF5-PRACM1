@@ -25,6 +25,8 @@ import prac1.utils.FileUtils;
  * FXML Controller class
  *
  * @author FpShare
+ * 
+ * Esta clase contiene todas las funcionalidades de nuestros controladores
  */
 public class MainScreenController implements Initializable {
 
@@ -57,6 +59,12 @@ public class MainScreenController implements Initializable {
 
     ArrayList<Cancion> playlist = new ArrayList<>();
 
+    
+    /**
+     *  en esta funcion hacemos play de la canción seleccionada y deshabilitamos el mismo boton play a la vez que
+     * habilitamos los botones de fast forward, fast backword, pause y stop,
+     * @param event 
+     */
     @FXML
     void on_botPlayClic(ActionEvent event) {
 
@@ -70,7 +78,10 @@ public class MainScreenController implements Initializable {
         }
 
     }
-
+     /**
+      * en esta funcion acabamos con la repoduccion de  la canción que este sonando, deshabilitamos el mismo boton stop y el boton de pause a la vez que habilitamos el boton de play 
+      * @param event 
+      */
     @FXML
     void on_botStopClic(ActionEvent event) {
         player.stop();
@@ -78,13 +89,22 @@ public class MainScreenController implements Initializable {
         btn_stop.setDisable(true);
         btn_play.setDisable(false);
     }
-
+    
+    /**
+     * en esta función pausamos la canción que se este reprodciendo deshabilitando el boton pause y habilitando el boton play
+     * @param event 
+     */
     @FXML
     void on_botPauseClic(ActionEvent event) {
         player.pause();
         btn_play.setDisable(false);
         btn_pause.setDisable(true);
     }
+    
+    /**
+     * en esta funcuión hacemos que la canción que se este reproduciendo se le reste 15 segundos y siga sondado des de ese punto
+     * @param event 
+     */
 
     @FXML
     void on_botBackward(ActionEvent event) {
@@ -100,6 +120,10 @@ public class MainScreenController implements Initializable {
         }
 
     }
+    /**
+     * en esta función hacemos que a la canción que este sonando se le añadan 15 segundos y siga sondando des de se punto
+     * @param event 
+     */
 
     @FXML
     void on_botForward(ActionEvent event) {
