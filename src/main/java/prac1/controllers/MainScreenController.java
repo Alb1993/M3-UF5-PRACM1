@@ -1,14 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package prac1.controllers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -17,6 +12,7 @@ import javafx.scene.control.Slider;
 import javafx.util.Duration;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,7 +24,7 @@ import prac1.utils.FileUtils;
 /**
  * FXML Controller class
  *
- * @author manel
+ * @author FpShare
  */
 public class MainScreenController implements Initializable {
 
@@ -57,9 +53,9 @@ public class MainScreenController implements Initializable {
     @FXML
     private Button btn_forward;
 
-    private ObservableList<String> lista = FXCollections.observableArrayList();
+    private final ObservableList<String> lista = FXCollections.observableArrayList();
 
-    ArrayList<Cancion> playlist = new ArrayList<Cancion>();
+    ArrayList<Cancion> playlist = new ArrayList<>();
 
     @FXML
     void on_botPlayClic(ActionEvent event) {
@@ -152,11 +148,13 @@ public class MainScreenController implements Initializable {
     }
 
     @FXML
-    void onClickSong(ActionEvent event) {
+    String onClickSong(ActionEvent event) {
         String selectedSong = list_music.getSelectionModel().getSelectedItem().toString();
 
         buscaCancion(selectedSong, playlist);
-        
+
+        return selectedSong;
+
     }
 
     @FXML
@@ -175,12 +173,6 @@ public class MainScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        String title = list_music.getSelectionModel().getSelectedItem().toString();
-        Cancion cancion1 = buscaCancion(title, playlist);
-        String path = cancion1.getRuta();
-
-        openMedia(path);
-        volumeSlider.setValue(player.getVolume() * 100);
         volumeSlider.valueProperty().addListener((Observable observable) -> {
             player.setVolume(volumeSlider.getValue() / 100);
         });
