@@ -13,6 +13,7 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.Observable;
+import javafx.collections.MapChangeListener.Change;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,7 +26,7 @@ import prac1.utils.FileUtils;
  * FXML Controller class
  *
  * @author FpShare
- * 
+ *
  * Esta clase contiene todas las funcionalidades de nuestros controladores
  */
 public class MainScreenController implements Initializable {
@@ -59,15 +60,18 @@ public class MainScreenController implements Initializable {
 
     ArrayList<Cancion> playlist = new ArrayList<>();
 
-    
     /**
-     *  en esta funcion hacemos play de la canción seleccionada y deshabilitamos el mismo boton play a la vez que
-     * habilitamos los botones de fast forward, fast backword, pause y stop,
-     * @param event 
+     * en esta funcion hacemos play de la canción seleccionada y deshabilitamos
+     * el mismo boton play a la vez que habilitamos los botones de fast forward,
+     * fast backword, pause y stop,
+     *
+     * @param event
      */
     @FXML
     void on_botPlayClic(ActionEvent event) {
-
+        int pos = list_music.getSelectionModel().getSelectedIndex();
+        Cancion cancion = playlist.get(pos);
+        openMedia(cancion.getRuta());
         if (this.player != null) {
             player.play();
             btn_play.setDisable(true);
@@ -75,37 +79,51 @@ public class MainScreenController implements Initializable {
             btn_stop.setDisable(false);
             btn_back.setDisable(false);
             btn_forward.setDisable(false);
+        } else {
+
+        }
+    }
+
+    /**
+     * en esta funcion acabamos con la repoduccion de la canción que este
+     * sonando, deshabilitamos el mismo boton stop y el boton de pause a la vez
+     * que habilitamos el boton de play
+     *
+     * @param event
+     */
+    @FXML
+    void on_botStopClic(ActionEvent event) {
+        if (this.player != null) {
+            player.stop();
+            btn_pause.setDisable(true);
+            btn_stop.setDisable(true);
+            btn_play.setDisable(false);
+
         }
 
     }
-     /**
-      * en esta funcion acabamos con la repoduccion de  la canción que este sonando, deshabilitamos el mismo boton stop y el boton de pause a la vez que habilitamos el boton de play 
-      * @param event 
-      */
-    @FXML
-    void on_botStopClic(ActionEvent event) {
-        player.stop();
-        btn_pause.setDisable(true);
-        btn_stop.setDisable(true);
-        btn_play.setDisable(false);
-    }
-    
+
     /**
-     * en esta función pausamos la canción que se este reprodciendo deshabilitando el boton pause y habilitando el boton play
-     * @param event 
+     * en esta función pausamos la canción que se este reprodciendo
+     * deshabilitando el boton pause y habilitando el boton play
+     *
+     * @param event
      */
     @FXML
     void on_botPauseClic(ActionEvent event) {
-        player.pause();
-        btn_play.setDisable(false);
-        btn_pause.setDisable(true);
+        if (this.player != null) {
+            player.pause();
+            btn_play.setDisable(false);
+            btn_pause.setDisable(true);
+        }
     }
-    
-    /**
-     * en esta funcuión hacemos que la canción que se este reproduciendo se le reste 15 segundos y siga sondado des de ese punto
-     * @param event 
-     */
 
+    /**
+     * en esta funcuión hacemos que la canción que se este reproduciendo se le
+     * reste 15 segundos y siga sondado des de ese punto
+     *
+     * @param event
+     */
     @FXML
     void on_botBackward(ActionEvent event) {
         Duration currentTime = player.getCurrentTime();
@@ -120,9 +138,12 @@ public class MainScreenController implements Initializable {
         }
 
     }
+
     /**
-     * en esta función hacemos que a la canción que este sonando se le añadan 15 segundos y siga sondando des de se punto
-     * @param event 
+     * en esta función hacemos que a la canción que este sonando se le añadan 15
+     * segundos y siga sondando des de se punto
+     *
+     * @param event
      */
 
     @FXML
@@ -148,20 +169,37 @@ public class MainScreenController implements Initializable {
     void on_botAddClic(ActionEvent event) {
         try {
             String path;
+            Cancion cancion = new Cancion();
             File archivo = FileUtils.getMP3Fromfile();
             if (archivo != null) {
                 path = archivo.toURI().toString();
+                System.out.println(path);
                 if (path != null) {
                     media = new Media(path);
-                    player = new MediaPlayer(media);
-                    String duracion = media.getDuration().toString();
-                    String titulo = archivo.getName();
-                    String ruta = archivo.getAbsolutePath();
-                    titulo = removerExtension(titulo);
-                    Cancion cancion = new Cancion(titulo, duracion, ruta);
+                    //player = new MediaPlayer(media);
+                    media.getMetadata().addListener((Change<? extends String, ? extends Object> c) -> {
+                        if (c.wasAdded()) {
+                            if ("title".equals(c.getKey())) {
+                                String titulo = c.getValueAdded().toString();
+                                System.out.println(titulo);
+                                cancion.setNombre(titulo);
+                                lista.add(titulo);
+                            } else if ("duration".equals(c.getKey())) {
+                                String duracion = c.getValueAdded().toString();
+                                System.out.println(duracion);
+                                cancion.setDuracion(duracion);
+                            }
+                        }
+
+                    });
+                    cancion.setRuta(FileUtils.normalizeURLFormat(path));
+                    System.out.println(cancion.getNombre());
+                    //String ruta = archivo.getAbsolutePath();
+                    //titulo = removerExtension(titulo);
+                    //Cancion cancion = new Cancion(titulo, ruta, duracion);
                     playlist.add(cancion);
-                    lista.add(titulo);
                     list_music.setItems(lista);
+
                 }
             }
         } catch (FileNotFoundException e) {
@@ -170,11 +208,11 @@ public class MainScreenController implements Initializable {
             e.printStackTrace();
         }
     }
+
     /**
-     * 
-     * @param event
-     * Este metodo lo que hace es comparar la canción seleccionada por el usuario
-     * con las guardadas en la lista.
+     *
+     * @param event Este metodo lo que hace es comparar la canción seleccionada
+     * por el usuario con las guardadas en la lista.
      */
     @FXML
     String onClickSong(ActionEvent event) {
@@ -207,12 +245,12 @@ public class MainScreenController implements Initializable {
             player.setVolume(volumeSlider.getValue() / 100);
         });
     }
+
     /**
-     * 
+     *
      * @param title
-     * @param playlist
-     * Este metodo devuelve la cancion de la lista que se asemeja a la enviada
-     * en el string title
+     * @param playlist Este metodo devuelve la cancion de la lista que se
+     * asemeja a la enviada en el string title
      */
     public Cancion buscaCancion(String title, ArrayList<Cancion> playlist) {
         Cancion ret = null;

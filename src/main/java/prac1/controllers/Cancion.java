@@ -35,5 +35,10 @@ public class Cancion{
         this.ruta = ruta;
         this.duracion = duracion;
     }
+        public Cancion() {
+        this.nombre = "";
+        this.ruta = "";
+        this.duracion = "";
+    }
 
 }
